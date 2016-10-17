@@ -27,17 +27,33 @@
           },
           {
             "type": "color",
-            "messageKey": "hour",
-            "defaultValue": "55AAFF",
-            "label": "Hour Color",
+            "messageKey": "hourOutline",
+            "defaultValue": "FFFFFF",
+            "label": "Hour Outline Color",
             "sunlight": false,
             "allowGray": true
           },
           {
             "type": "color",
-            "messageKey": "minute",
+            "messageKey": "hourFill",
             "defaultValue": "FFFFFF",
-            "label": "Minute Color",
+            "label": "Hour Fill Color",
+            "sunlight": false,
+            "allowGray": true
+          },
+          {
+            "type": "color",
+            "messageKey": "minuteOutline",
+            "defaultValue": "55AAFF",
+            "label": "Minute Outline Color",
+            "sunlight": false,
+            "allowGray": true
+          },
+          {
+            "type": "color",
+            "messageKey": "minuteFill",
+            "defaultValue": "55AAFF",
+            "label": "Minute Fill Color",
             "sunlight": false,
             "allowGray": true
           },

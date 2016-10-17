@@ -1,7 +1,7 @@
 {
   "name": "cutting_edge",
   "author": "Christian Reinbacher",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "keywords": [
     "pebble-app"
   ],
@@ -28,8 +28,10 @@
       "watchface": true
     },
     "messageKeys": [
-      "hour",
-      "minute",
+      "hourOutline",
+      "hourFill",
+      "minuteOutline",
+      "minuteFill",
       "line",
       "background"
     ],
@@ -39,6 +41,11 @@
           "type": "raw",
           "name": "PEACE_FFONT",
           "file": "PeaceSans.ffont"
+        },
+        {
+          "type": "raw",
+          "name": "PEACE_OUTLINE_FFONT",
+          "file": "PeaceSansOutline.ffont"
         },
         {
           "name": "IMAGE_LOGO",

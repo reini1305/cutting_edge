@@ -6,8 +6,8 @@
 
 static Layer *background_layer;
 static Window *window;
-static GBitmap *number_bitmap;
-static FFont* peace_font;
+static FFont* filled_font;
+static FFont* outlined_font;
 static char minute_buffer[3];
 static char hour_buffer[3];
 
@@ -76,11 +76,18 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
   graphics_fill_rect(ctx,bounds,0,GCornerNone);
   //hour
   fctx_begin_fill(&fctx);
-  fctx_set_text_em_height(&fctx, peace_font, 100);
-  fctx_set_fill_color(&fctx, enamel_get_hour());
+  fctx_set_text_em_height(&fctx, filled_font, 100);
+  fctx_set_fill_color(&fctx, enamel_get_hourFill());
   fctx_set_pivot(&fctx, FPointZero);
   fctx_set_offset(&fctx, FPointI(bounds.size.w/2-10,bounds.size.h/3));
-  fctx_draw_string(&fctx, hour_buffer, peace_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
+  fctx_draw_string(&fctx, hour_buffer, filled_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
+  fctx_end_fill(&fctx);
+  fctx_begin_fill(&fctx);
+  fctx_set_text_em_height(&fctx, outlined_font, 100);
+  fctx_set_fill_color(&fctx, enamel_get_hourOutline());
+  fctx_set_pivot(&fctx, FPointZero);
+  fctx_set_offset(&fctx, FPointI(bounds.size.w/2-10,bounds.size.h/3));
+  fctx_draw_string(&fctx, hour_buffer, outlined_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
   fctx_end_fill(&fctx);
 
   // copy framebuffer to bitmap
@@ -103,11 +110,18 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
   graphics_fill_rect(ctx,bounds,0,GCornerNone);
   //minute
   fctx_begin_fill(&fctx);
-  fctx_set_text_em_height(&fctx, peace_font, 100);
-  fctx_set_fill_color(&fctx, enamel_get_minute());
+  fctx_set_text_em_height(&fctx, filled_font, 100);
+  fctx_set_fill_color(&fctx, enamel_get_minuteFill());
   fctx_set_pivot(&fctx, FPointZero);
   fctx_set_offset(&fctx, FPointI(bounds.size.w/2+10,bounds.size.h*2/3));
-  fctx_draw_string(&fctx, minute_buffer, peace_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
+  fctx_draw_string(&fctx, minute_buffer, filled_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
+  fctx_end_fill(&fctx);
+  fctx_begin_fill(&fctx);
+  fctx_set_text_em_height(&fctx, outlined_font, 100);
+  fctx_set_fill_color(&fctx, enamel_get_minuteOutline());
+  fctx_set_pivot(&fctx, FPointZero);
+  fctx_set_offset(&fctx, FPointI(bounds.size.w/2+10,bounds.size.h*2/3));
+  fctx_draw_string(&fctx, minute_buffer, outlined_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
   fctx_end_fill(&fctx);
 
   // copy bitmap to framebuffer
@@ -161,8 +175,8 @@ static void window_load(Window *window) {
   layer_set_update_proc(background_layer, background_update_proc);
   layer_add_child(window_layer, background_layer);
 
-  number_bitmap = NULL;
-  peace_font = ffont_create_from_resource(RESOURCE_ID_PEACE_FFONT);
+  outlined_font = ffont_create_from_resource(RESOURCE_ID_PEACE_OUTLINE_FFONT);
+  filled_font = ffont_create_from_resource(RESOURCE_ID_PEACE_FFONT);
   time_t now = time(NULL);
   struct tm *t = localtime(&now);
   handle_tick(t, MINUTE_UNIT);
@@ -171,7 +185,8 @@ static void window_load(Window *window) {
 
 static void window_unload(Window *window) {
   layer_destroy(background_layer);
-  ffont_destroy(peace_font);
+  ffont_destroy(filled_font);
+  ffont_destroy(outlined_font);
   tick_timer_service_unsubscribe();
 }
 
