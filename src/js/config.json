@@ -17,6 +17,12 @@
             "type": "heading",
             "defaultValue": "Settings"
             },
+            {
+            "type": "toggle",
+            "messageKey": "animation",
+            "label": "Startup Animation?",
+            "defaultValue": true
+            },
           {
             "type": "color",
             "messageKey": "background",
