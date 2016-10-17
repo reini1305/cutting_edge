@@ -1,0 +1,58 @@
+[
+{
+  "type": "heading",
+  "id": "main-heading",
+  "defaultValue": "Cutting Edge Configuration",
+  "size": 1
+},
+{
+  "type": "text",
+  "defaultValue": "If you like what I'm doing, consider a donation: <a href='https://pledgie.com/campaigns/28156'><img alt='Click here to lend your support to: Christian Reinbachers Pebble Apps and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/28156.png?skin_name=chrome' border='0' ></a>",
+  "id": "donationtext"
+},
+{
+  "type": "section",
+  "items": [
+            {
+            "type": "heading",
+            "defaultValue": "Settings"
+            },
+          {
+            "type": "color",
+            "messageKey": "background",
+            "defaultValue": "000000",
+            "label": "Background Color",
+            "sunlight": false,
+            "allowGray": true
+          },
+          {
+            "type": "color",
+            "messageKey": "hour",
+            "defaultValue": "55AAFF",
+            "label": "Hour Color",
+            "sunlight": false,
+            "allowGray": true
+          },
+          {
+            "type": "color",
+            "messageKey": "minute",
+            "defaultValue": "FFFFFF",
+            "label": "Minute Color",
+            "sunlight": false,
+            "allowGray": true
+          },
+          {
+            "type": "color",
+            "messageKey": "line",
+            "defaultValue": "000000",
+            "label": "Line Color",
+            "sunlight": false,
+            "allowGray": false
+          }
+          ]
+},
+{
+  "type": "submit",
+  "defaultValue": "Save"
+}
+]

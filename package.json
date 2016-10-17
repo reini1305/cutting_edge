@@ -1,0 +1,55 @@
+{
+  "name": "cutting_edge",
+  "author": "Christian Reinbacher",
+  "version": "1.4.0",
+  "keywords": [
+    "pebble-app"
+  ],
+  "private": true,
+  "dependencies": {
+    "enamel": "^1.2.3",
+    "pebble-fctx": "^1.6.0"
+  },
+  "pebble": {
+    "displayName": "Cutting Edge",
+    "uuid": "3bc8dd28-6ff2-4bc9-95a8-a63a698dbba6",
+    "sdkVersion": "3",
+    "enableMultiJS": true,
+    "targetPlatforms": [
+      "aplite",
+      "basalt",
+      "chalk",
+      "diorite"
+    ],
+    "capabilities": [
+      "configurable"
+    ],
+    "watchapp": {
+      "watchface": true
+    },
+    "messageKeys": [
+      "hour",
+      "minute",
+      "line",
+      "background"
+    ],
+    "resources": {
+      "media": [
+        {
+          "type": "raw",
+          "name": "PEACE_FFONT",
+          "file": "PeaceSans.ffont"
+        },
+        {
+          "name": "IMAGE_LOGO",
+          "file": "logo.png",
+          "type": "bitmap",
+          "menuIcon": true
+        }
+      ]
+    }
+  },
+  "devDependencies": {
+    "pebble-fctx-compiler": "^1.2.0"
+  }
+}
