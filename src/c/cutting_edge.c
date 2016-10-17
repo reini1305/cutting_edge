@@ -163,7 +163,9 @@ static void window_load(Window *window) {
 
   number_bitmap = NULL;
   peace_font = ffont_create_from_resource(RESOURCE_ID_PEACE_FFONT);
-//  handle_tick(t, MINUTE_UNIT);
+  time_t now = time(NULL);
+  struct tm *t = localtime(&now);
+  handle_tick(t, MINUTE_UNIT);
   tick_timer_service_subscribe(MINUTE_UNIT, handle_tick);
 }
 
