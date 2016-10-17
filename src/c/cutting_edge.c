@@ -66,7 +66,7 @@ static int max(int val1, int val2) {
 static void implementation_update(Animation *animation,
                                   const AnimationProgress progress) {
   // Animate some completion variable
-  s_animation_percent = ((int)progress * 100) / ANIMATION_NORMALIZED_MAX
+  s_animation_percent = ((int)progress * 100) / ANIMATION_NORMALIZED_MAX;
   layer_mark_dirty(background_layer);
 }
 
