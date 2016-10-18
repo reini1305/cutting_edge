@@ -1,7 +1,7 @@
-Cutting Edge
+Clean Cut
 ==============
 
-This is the source repository for the Pebble Watchface "Cutting Edge"
+This is the source repository for the Pebble Watchface "Clean Cut"
 
 The app can be found in the store soon.
 
