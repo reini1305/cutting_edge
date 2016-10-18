@@ -71,7 +71,7 @@ static void implementation_update(Animation *animation,
   if(progress<(ANIMATION_NORMALIZED_MAX*8/10)){
     s_animation_percent = ((int)progress * 150) / ANIMATION_NORMALIZED_MAX;
   } else {
-    s_animation_percent = 120 - ((int)(progress-(ANIMATION_NORMALIZED_MAX*8/10)) * 20)/ (ANIMATION_NORMALIZED_MAX*2/10); 
+    s_animation_percent = 120 - ((int)(progress-(ANIMATION_NORMALIZED_MAX*8/10)) * 20)/ (ANIMATION_NORMALIZED_MAX*2/10);
   }
 
   layer_mark_dirty(background_layer);
@@ -211,6 +211,11 @@ static void handle_tick(struct tm *tick_time, TimeUnits units_changed) {
   layer_mark_dirty(background_layer);
 }
 
+static void handle_bluetooth(bool connected){
+  if(enamel_get_bluetooth() && !connected)
+    vibes_long_pulse();
+}
+
 static void window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
@@ -267,6 +272,8 @@ static void init(void) {
     .unload = window_unload,
   });
 
+  bluetooth_connection_service_subscribe(handle_bluetooth);
+
   // Push the window onto the stack
   const bool animated = true;
   window_stack_push(window, animated);
@@ -275,6 +282,7 @@ static void init(void) {
 
 static void deinit(void) {
   enamel_deinit();
+  bluetooth_connection_service_unsubscribe();
   //window_destroy(window);
 }
 

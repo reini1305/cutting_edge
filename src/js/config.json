@@ -2,7 +2,7 @@
 {
   "type": "heading",
   "id": "main-heading",
-  "defaultValue": "Cutting Edge Configuration",
+  "defaultValue": "Clean Cut Configuration",
   "size": 1
 },
 {
@@ -15,7 +15,7 @@
   "items": [
             {
             "type": "heading",
-            "defaultValue": "Settings"
+            "defaultValue": "Visual Settings"
             },
             {
             "type": "toggle",
@@ -83,6 +83,21 @@
             "sunlight": false,
             "allowGray": false
           }
+          ]
+},
+{
+  "type": "section",
+  "items": [
+            {
+            "type": "heading",
+            "defaultValue": "Other Settings"
+            },
+            {
+            "type": "toggle",
+            "messageKey": "bluetooth",
+            "label": "Vibration on Bluetooth Disconnect?",
+            "defaultValue": true
+            }
           ]
 },
 {

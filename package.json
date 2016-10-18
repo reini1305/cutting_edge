@@ -1,7 +1,7 @@
 {
   "name": "clean_cut",
   "author": "Christian Reinbacher",
-  "version": "1.8.0",
+  "version": "1.9.0",
   "keywords": [
     "pebble-app"
   ],
@@ -36,7 +36,8 @@
       "background",
       "animation",
       "drawMinuteOutline",
-      "drawHourOutline"
+      "drawHourOutline",
+      "bluetooth"
     ],
     "resources": {
       "media": [
