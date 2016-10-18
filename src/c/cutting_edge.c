@@ -59,6 +59,10 @@ static int min(int val1, int val2) {
   return val1<val2? val1:val2;
 }
 
+static int max(int val1, int val2) {
+  return val1>val2? val1:val2;
+}
+
 static void implementation_update(Animation *animation,
                                   const AnimationProgress progress) {
   // Animate some completion variable
@@ -101,9 +105,10 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
 
   // copy framebuffer to bitmap
   GBitmap *fb = graphics_capture_frame_buffer(ctx);
-  GBitmap *copy = gbitmap_create_blank(gbitmap_get_bounds(fb).size,gbitmap_get_format(fb));
+  GSize size = (GSize){gbitmap_get_bounds(fb).size.w, gbitmap_get_bounds(fb).size.h/2 + 10};
+  GBitmap *copy = gbitmap_create_blank(size,PBL_IF_COLOR_ELSE(GBitmapFormat8Bit,gbitmap_get_format(fb)));
   // Iterate over all rows
-  for(int y = 0; y < bounds.size.h/2+10; y++) {
+  for(int y = 0; y < size.h-20; y++) {
     // Get this row's range and data
     GBitmapDataRowInfo info = gbitmap_get_data_row_info(fb, y);
     GBitmapDataRowInfo copy_info = gbitmap_get_data_row_info(copy, y);
@@ -113,6 +118,23 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
       set_pixel_color(copy_info, GPoint(x, y), get_pixel_color(info, GPoint(x,y)));
     }
   }
+  int min_x = bounds.size.w;
+  for(int y = size.h-20; y < size.h; y++) {
+    // Get this row's range and data
+    GBitmapDataRowInfo info = gbitmap_get_data_row_info(fb, y);
+    GBitmapDataRowInfo copy_info = gbitmap_get_data_row_info(copy, y);
+
+    // Iterate over some pixels
+    for(int x = info.min_x; x <= min(min_x,info.max_x); x++) {
+      set_pixel_color(copy_info, GPoint(x, y), get_pixel_color(info, GPoint(x,y)));
+    }
+    #ifdef PBL_COLOR
+    for(int x = max(info.min_x,min_x); x <= info.max_x; x++) {
+      set_pixel_color(copy_info, GPoint(x, y), GColorClear);
+    }
+    #endif
+    min_x -= bounds.size.w/20;
+  }
   graphics_release_frame_buffer(ctx, fb);
   //black background
   graphics_context_set_fill_color(ctx,enamel_get_background());
@@ -121,22 +143,22 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
   fctx_begin_fill(&fctx);
   fctx_set_text_em_height(&fctx, filled_font, 100);
   fctx_set_fill_color(&fctx, enamel_get_minuteFill());
-  fctx_set_pivot(&fctx, FPointZero);
   fctx_set_offset(&fctx, FPointI(bounds.size.w/2+10,bounds.size.h-(bounds.size.h*s_animation_percent)/300));
   fctx_draw_string(&fctx, minute_buffer, filled_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
   fctx_end_fill(&fctx);
   fctx_begin_fill(&fctx);
   fctx_set_text_em_height(&fctx, outlined_font, 100);
   fctx_set_fill_color(&fctx, enamel_get_minuteOutline());
-  fctx_set_pivot(&fctx, FPointZero);
   fctx_set_offset(&fctx, FPointI(bounds.size.w/2+10,bounds.size.h-(bounds.size.h*s_animation_percent)/300));
   fctx_draw_string(&fctx, minute_buffer, outlined_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
   fctx_end_fill(&fctx);
 
-  // copy bitmap to framebuffer
+  fctx_deinit_context(&fctx);
+
+  #ifdef PBL_BW
   fb = graphics_capture_frame_buffer(ctx);
   // Iterate over all rows
-  for(int y = 0; y < bounds.size.h/2-10; y++) {
+  for(int y = 0; y < size.h-20; y++) {
     // Get this row's range and data
     GBitmapDataRowInfo info = gbitmap_get_data_row_info(fb, y);
     GBitmapDataRowInfo copy_info = gbitmap_get_data_row_info(copy, y);
@@ -147,7 +169,7 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
     }
   }
   int max_x = bounds.size.w;
-  for(int y = bounds.size.h/2-10; y < bounds.size.h/2+10; y++) {
+  for(int y = size.h-20; y < size.h; y++) {
     // Get this row's range and data
     GBitmapDataRowInfo info = gbitmap_get_data_row_info(fb, y);
     GBitmapDataRowInfo copy_info = gbitmap_get_data_row_info(copy, y);
@@ -159,14 +181,17 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
     max_x -= bounds.size.w/20;
   }
   graphics_release_frame_buffer(ctx, fb);
-  gbitmap_destroy(copy);
+  #else
+  graphics_context_set_compositing_mode(ctx, GCompOpSet);
+  graphics_draw_bitmap_in_rect(ctx,copy,(GRect){.origin=GPointZero,.size=size});
+  #endif
 
-  fctx_deinit_context(&fctx);
+  gbitmap_destroy(copy);
 
   // draw line
   graphics_context_set_stroke_color(ctx,enamel_get_line());
   graphics_context_set_stroke_width(ctx,3);
-  graphics_draw_line(ctx,GPoint(0,bounds.size.h/2+10),GPoint(bounds.size.w,bounds.size.h/2-10));
+  graphics_draw_line(ctx,GPoint(0,size.h),GPoint(bounds.size.w,size.h-20));
 }
 
 static void handle_tick(struct tm *tick_time, TimeUnits units_changed) {
