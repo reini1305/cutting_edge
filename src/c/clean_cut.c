@@ -68,7 +68,12 @@ static int max(int val1, int val2) {
 static void implementation_update(Animation *animation,
                                   const AnimationProgress progress) {
   // Animate some completion variable
-  s_animation_percent = ((int)progress * 100) / ANIMATION_NORMALIZED_MAX;
+  if(progress<(ANIMATION_NORMALIZED_MAX*8/10)){
+    s_animation_percent = ((int)progress * 150) / ANIMATION_NORMALIZED_MAX;
+  } else {
+    s_animation_percent = 120 - ((int)(progress-(ANIMATION_NORMALIZED_MAX*8/10)) * 20)/ (ANIMATION_NORMALIZED_MAX*2/10); 
+  }
+
   layer_mark_dirty(background_layer);
 }
 
@@ -94,7 +99,7 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
   fctx_set_text_em_height(&fctx, filled_font, 100);
   fctx_set_fill_color(&fctx, enamel_get_hourFill());
   fctx_set_pivot(&fctx, FPointZero);
-  fctx_set_offset(&fctx, FPointI(bounds.size.w/2-10,(bounds.size.h*s_animation_percent)/300));
+  fctx_set_offset(&fctx, FPointI((bounds.size.w*s_animation_percent)/200-10,bounds.size.h/3));
   fctx_draw_string(&fctx, hour_buffer, filled_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
   fctx_end_fill(&fctx);
   if(enamel_get_drawHourOutline()){
@@ -102,7 +107,7 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
     fctx_set_text_em_height(&fctx, outlined_font, 100);
     fctx_set_fill_color(&fctx, enamel_get_hourOutline());
     fctx_set_pivot(&fctx, FPointZero);
-    fctx_set_offset(&fctx, FPointI(bounds.size.w/2-10,(bounds.size.h*s_animation_percent)/300));
+    fctx_set_offset(&fctx, FPointI((bounds.size.w*s_animation_percent)/200-10,bounds.size.h/3));
     fctx_draw_string(&fctx, hour_buffer, outlined_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
     fctx_end_fill(&fctx);
   }
@@ -147,14 +152,14 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
   fctx_begin_fill(&fctx);
   fctx_set_text_em_height(&fctx, filled_font, 100);
   fctx_set_fill_color(&fctx, enamel_get_minuteFill());
-  fctx_set_offset(&fctx, FPointI(bounds.size.w/2+10,bounds.size.h-(bounds.size.h*s_animation_percent)/300));
+  fctx_set_offset(&fctx, FPointI(bounds.size.w-(bounds.size.w*s_animation_percent)/200+10,bounds.size.h*2/3));
   fctx_draw_string(&fctx, minute_buffer, filled_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
   fctx_end_fill(&fctx);
   if(enamel_get_drawMinuteOutline()){
     fctx_begin_fill(&fctx);
     fctx_set_text_em_height(&fctx, outlined_font, 100);
     fctx_set_fill_color(&fctx, enamel_get_minuteOutline());
-    fctx_set_offset(&fctx, FPointI(bounds.size.w/2+10,bounds.size.h-(bounds.size.h*s_animation_percent)/300));
+    fctx_set_offset(&fctx, FPointI(bounds.size.w-(bounds.size.w*s_animation_percent)/200+10,bounds.size.h*2/3));
     fctx_draw_string(&fctx, minute_buffer, outlined_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
     fctx_end_fill(&fctx);
   }
@@ -197,7 +202,7 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
   // draw line
   graphics_context_set_stroke_color(ctx,enamel_get_line());
   graphics_context_set_stroke_width(ctx,3);
-  graphics_draw_line(ctx,GPoint(0,size.h),GPoint((bounds.size.w*s_animation_percent)/100,size.h-20));
+  graphics_draw_line(ctx,GPoint(0,size.h),GPoint(bounds.size.w,size.h-20));
 }
 
 static void handle_tick(struct tm *tick_time, TimeUnits units_changed) {
