@@ -1,7 +1,7 @@
 {
-  "name": "cutting_edge",
+  "name": "oblique",
   "author": "Christian Reinbacher",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "keywords": [
     "pebble-app"
   ],
@@ -11,7 +11,7 @@
     "pebble-fctx": "^1.6.0"
   },
   "pebble": {
-    "displayName": "Cutting Edge",
+    "displayName": "Oblique",
     "uuid": "3bc8dd28-6ff2-4bc9-95a8-a63a698dbba6",
     "sdkVersion": "3",
     "enableMultiJS": true,

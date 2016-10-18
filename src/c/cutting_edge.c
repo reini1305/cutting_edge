@@ -191,7 +191,7 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
   // draw line
   graphics_context_set_stroke_color(ctx,enamel_get_line());
   graphics_context_set_stroke_width(ctx,3);
-  graphics_draw_line(ctx,GPoint(0,size.h),GPoint(bounds.size.w,size.h-20));
+  graphics_draw_line(ctx,GPoint(0,size.h),GPoint((bounds.size.w*s_animation_percent)/100,size.h-20));
 }
 
 static void handle_tick(struct tm *tick_time, TimeUnits units_changed) {
