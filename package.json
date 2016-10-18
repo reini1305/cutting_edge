@@ -34,7 +34,9 @@
       "minuteFill",
       "line",
       "background",
-      "animation"
+      "animation",
+      "drawMinuteOutline",
+      "drawHourOutline"
     ],
     "resources": {
       "media": [

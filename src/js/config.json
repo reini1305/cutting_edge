@@ -32,6 +32,12 @@
             "allowGray": true
           },
           {
+          "type": "toggle",
+          "messageKey": "drawHourOutline",
+          "label": "Draw Hour Outline?",
+          "defaultValue": false
+          },
+          {
             "type": "color",
             "messageKey": "hourOutline",
             "defaultValue": "FFFFFF",
@@ -46,6 +52,12 @@
             "label": "Hour Fill Color",
             "sunlight": false,
             "allowGray": true
+          },
+          {
+          "type": "toggle",
+          "messageKey": "drawMinuteOutline",
+          "label": "Draw Minute Outline?",
+          "defaultValue": false
           },
           {
             "type": "color",
