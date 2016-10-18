@@ -78,7 +78,7 @@
           {
             "type": "color",
             "messageKey": "line",
-            "defaultValue": "000000",
+            "defaultValue": "FFFFFF",
             "label": "Line Color",
             "sunlight": false,
             "allowGray": false
