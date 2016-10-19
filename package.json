@@ -1,7 +1,7 @@
 {
   "name": "clean_cut",
   "author": "Christian Reinbacher",
-  "version": "1.10.0",
+  "version": "1.11.0",
   "keywords": [
     "pebble-app"
   ],
@@ -19,7 +19,8 @@
       "aplite",
       "basalt",
       "chalk",
-      "diorite"
+      "diorite",
+      "emery"
     ],
     "capabilities": [
       "configurable"
