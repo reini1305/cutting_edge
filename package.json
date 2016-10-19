@@ -7,8 +7,8 @@
   ],
   "private": true,
   "dependencies": {
-    "enamel": "^1.2.3",
-    "pebble-fctx": "^1.6.0"
+    "enamel": "^1.2.4",
+    "pebble-fctx": "^1.6.1"
   },
   "pebble": {
     "displayName": "Clean Cut",
