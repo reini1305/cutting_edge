@@ -1,7 +1,7 @@
 {
   "name": "clean_cut",
   "author": "Christian Reinbacher",
-  "version": "1.11.0",
+  "version": "1.13.0",
   "keywords": [
     "pebble-app"
   ],
@@ -38,7 +38,8 @@
       "animation",
       "drawMinuteOutline",
       "drawHourOutline",
-      "bluetooth"
+      "bluetooth",
+      "backgroundMinute"
     ],
     "resources": {
       "media": [
@@ -50,7 +51,7 @@
         {
           "type": "raw",
           "name": "PEACE_OUTLINE_FFONT",
-          "file": "PeaceSansOutline.ffont"
+          "file": "PeaceSansThickOutline.ffont"
         },
         {
           "name": "IMAGE_LOGO",

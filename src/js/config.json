@@ -15,13 +15,7 @@
   "items": [
             {
             "type": "heading",
-            "defaultValue": "Visual Settings"
-            },
-            {
-            "type": "toggle",
-            "messageKey": "animation",
-            "label": "Startup Animation?",
-            "defaultValue": true
+            "defaultValue": "Hour Settings"
             },
           {
             "type": "color",
@@ -34,14 +28,14 @@
           {
           "type": "toggle",
           "messageKey": "drawHourOutline",
-          "label": "Draw Hour Outline?",
+          "label": "Draw Outline?",
           "defaultValue": false
           },
           {
             "type": "color",
             "messageKey": "hourOutline",
             "defaultValue": "FFFFFF",
-            "label": "Hour Outline Color",
+            "label": "Outline Color",
             "sunlight": false,
             "allowGray": true
           },
@@ -49,21 +43,38 @@
             "type": "color",
             "messageKey": "hourFill",
             "defaultValue": "FFFFFF",
-            "label": "Hour Fill Color",
+            "label": "Fill Color",
+            "sunlight": false,
+            "allowGray": true
+          }
+        ]
+},
+{
+  "type": "section",
+  "items": [
+          {
+          "type": "heading",
+          "defaultValue": "Minute Settings"
+          },
+          {
+            "type": "color",
+            "messageKey": "backgroundMinute",
+            "defaultValue": "000000",
+            "label": "Background Color",
             "sunlight": false,
             "allowGray": true
           },
           {
           "type": "toggle",
           "messageKey": "drawMinuteOutline",
-          "label": "Draw Minute Outline?",
+          "label": "Draw Outline?",
           "defaultValue": false
           },
           {
             "type": "color",
             "messageKey": "minuteOutline",
             "defaultValue": "55AAFF",
-            "label": "Minute Outline Color",
+            "label": "Outline Color",
             "sunlight": false,
             "allowGray": true
           },
@@ -71,26 +82,32 @@
             "type": "color",
             "messageKey": "minuteFill",
             "defaultValue": "55AAFF",
-            "label": "Minute Fill Color",
+            "label": "Fill Color",
             "sunlight": false,
             "allowGray": true
-          },
-          {
-            "type": "color",
-            "messageKey": "line",
-            "defaultValue": "FFFFFF",
-            "label": "Line Color",
-            "sunlight": false,
-            "allowGray": false
           }
           ]
-},
-{
+  },
+  {
   "type": "section",
   "items": [
             {
             "type": "heading",
             "defaultValue": "Other Settings"
+            },
+            {
+              "type": "color",
+              "messageKey": "line",
+              "defaultValue": "FFFFFF",
+              "label": "Cutting Line Color",
+              "sunlight": false,
+              "allowGray": false
+            },
+            {
+            "type": "toggle",
+            "messageKey": "animation",
+            "label": "Startup Animation?",
+            "defaultValue": true
             },
             {
             "type": "toggle",

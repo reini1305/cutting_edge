@@ -155,7 +155,7 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
   }
   graphics_release_frame_buffer(ctx, fb);
   //black background
-  graphics_context_set_fill_color(ctx,enamel_get_background());
+  graphics_context_set_fill_color(ctx,enamel_get_backgroundMinute());
   graphics_fill_rect(ctx,bounds,0,GCornerNone);
   //minute
   fctx_begin_fill(&fctx);
