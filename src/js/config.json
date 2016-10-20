@@ -104,6 +104,16 @@
               "allowGray": false
             },
             {
+              "type": "slider",
+              "messageKey": "cutAmount",
+              "defaultValue": 4,
+              "label": "Readability",
+              "description": "0: very readable, 5:what am I looking at?",
+              "min": 0,
+              "max": 5,
+              "step": 1
+            },
+            {
             "type": "toggle",
             "messageKey": "animation",
             "label": "Startup Animation?",

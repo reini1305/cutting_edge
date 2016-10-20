@@ -15,8 +15,10 @@ static char hour_buffer[3];
 
 #ifdef PBL_PLATFORM_EMERY
 #define FONT_SIZE 138
+#define CUT_STEP 6
 #else
 #define FONT_SIZE 100
+#define CUT_STEP 3
 #endif
 
 // used to pass bimap info to get/set pixel accurately
@@ -97,7 +99,7 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
   bounds.size.h-=offset_from_bottom;
 #endif
   const int text_offset_x = bounds.size.w/10;
-  const int text_offset_y = 0;//bounds.size.h/20;
+  const int text_offset_y = enamel_get_cutAmount()*CUT_STEP;
 
   FContext fctx;
   fctx_init_context(&fctx, ctx);
