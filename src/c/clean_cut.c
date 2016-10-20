@@ -12,6 +12,7 @@ static Animation *s_animation;
 static int16_t s_animation_percent;
 static char minute_buffer[3];
 static char hour_buffer[3];
+static bool bt_disconnect;
 
 #ifdef PBL_PLATFORM_EMERY
   #define FONT_SIZE 138
@@ -109,20 +110,20 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
 
   FContext fctx;
   fctx_init_context(&fctx, ctx);
-  graphics_context_set_fill_color(ctx,enamel_get_background());
+  graphics_context_set_fill_color(ctx,bt_disconnect?GColorBlack:enamel_get_background());
   graphics_fill_rect(ctx,bounds,0,GCornerNone);
   //hour
   fctx_begin_fill(&fctx);
   fctx_set_text_em_height(&fctx, filled_font, FONT_SIZE);
-  fctx_set_fill_color(&fctx, enamel_get_hourFill());
+  fctx_set_fill_color(&fctx, bt_disconnect?GColorBlack:enamel_get_hourFill());
   fctx_set_pivot(&fctx, FPointZero);
   fctx_set_offset(&fctx, FPointI((bounds.size.w*s_animation_percent)/200-text_offset_x,bounds.size.h/3+text_offset_y));
   fctx_draw_string(&fctx, hour_buffer, filled_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
   fctx_end_fill(&fctx);
-  if(enamel_get_drawHourOutline()){
+  if(bt_disconnect || enamel_get_drawHourOutline()){
     fctx_begin_fill(&fctx);
     fctx_set_text_em_height(&fctx, outlined_font, FONT_SIZE);
-    fctx_set_fill_color(&fctx, enamel_get_hourOutline());
+    fctx_set_fill_color(&fctx, bt_disconnect?GColorWhite:enamel_get_hourOutline());
     fctx_set_pivot(&fctx, FPointZero);
     fctx_set_offset(&fctx, FPointI((bounds.size.w*s_animation_percent)/200-text_offset_x,bounds.size.h/3+text_offset_y));
     fctx_draw_string(&fctx, hour_buffer, outlined_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
@@ -163,19 +164,19 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
   }
   graphics_release_frame_buffer(ctx, fb);
   //black background
-  graphics_context_set_fill_color(ctx,enamel_get_backgroundMinute());
+  graphics_context_set_fill_color(ctx,bt_disconnect?GColorBlack:enamel_get_backgroundMinute());
   graphics_fill_rect(ctx,bounds,0,GCornerNone);
   //minute
   fctx_begin_fill(&fctx);
   fctx_set_text_em_height(&fctx, filled_font, FONT_SIZE);
-  fctx_set_fill_color(&fctx, enamel_get_minuteFill());
+  fctx_set_fill_color(&fctx, bt_disconnect?GColorBlack:enamel_get_minuteFill());
   fctx_set_offset(&fctx, FPointI(bounds.size.w-(bounds.size.w*s_animation_percent)/200+text_offset_x,bounds.size.h*2/3-text_offset_y));
   fctx_draw_string(&fctx, minute_buffer, filled_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
   fctx_end_fill(&fctx);
-  if(enamel_get_drawMinuteOutline()){
+  if(bt_disconnect || enamel_get_drawMinuteOutline()){
     fctx_begin_fill(&fctx);
     fctx_set_text_em_height(&fctx, outlined_font, FONT_SIZE);
-    fctx_set_fill_color(&fctx, enamel_get_minuteOutline());
+    fctx_set_fill_color(&fctx, bt_disconnect?GColorWhite:enamel_get_minuteOutline());
     fctx_set_offset(&fctx, FPointI(bounds.size.w-(bounds.size.w*s_animation_percent)/200+text_offset_x,bounds.size.h*2/3-text_offset_y));
     fctx_draw_string(&fctx, minute_buffer, outlined_font, GTextAlignmentCenter, FTextAnchorCapMiddle);
     fctx_end_fill(&fctx);
@@ -217,7 +218,7 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
   gbitmap_destroy(copy);
 
   // draw line
-  graphics_context_set_stroke_color(ctx,enamel_get_line());
+  graphics_context_set_stroke_color(ctx,bt_disconnect?GColorWhite:enamel_get_line());
 #if defined(PBL_PLATFORM_EMERY) || defined(PBL_ROUND)
   graphics_context_set_stroke_width(ctx,3);
 #else
@@ -233,8 +234,12 @@ static void handle_tick(struct tm *tick_time, TimeUnits units_changed) {
 }
 
 static void handle_bluetooth(bool connected){
-  if(enamel_get_bluetooth() && !connected)
+  if(enamel_get_bluetooth() && !connected) {
     vibes_long_pulse();
+    bt_disconnect = true;
+  } else
+    bt_disconnect = false;
+  layer_mark_dirty(background_layer);
 }
 
 static void window_load(Window *window) {
@@ -286,6 +291,7 @@ static void init(void) {
   enamel_init();
   enamel_settings_received_subscribe(enamel_settings_received_handler,NULL);
   events_app_message_open();
+  bt_disconnect = false;
   window = window_create();
   window_set_background_color(window, enamel_get_background());
   window_set_window_handlers(window, (WindowHandlers) {
