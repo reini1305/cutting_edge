@@ -14,11 +14,17 @@ static char minute_buffer[3];
 static char hour_buffer[3];
 
 #ifdef PBL_PLATFORM_EMERY
-#define FONT_SIZE 138
-#define CUT_STEP 6
+  #define FONT_SIZE 138
+  #define CUT_STEP 6
+  #define OUTLINE_FONT RESOURCE_ID_PEACE_THICK_OUTLINE_FFONT
 #else
-#define FONT_SIZE 100
-#define CUT_STEP 3
+  #define FONT_SIZE 100
+  #define CUT_STEP 3
+  #ifdef PBL_ROUND
+    #define OUTLINE_FONT RESOURCE_ID_PEACE_THICK_OUTLINE_FFONT
+  #else
+    #define OUTLINE_FONT RESOURCE_ID_PEACE_OUTLINE_FFONT
+  #endif
 #endif
 
 // used to pass bimap info to get/set pixel accurately
@@ -212,7 +218,11 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
 
   // draw line
   graphics_context_set_stroke_color(ctx,enamel_get_line());
+#if defined(PBL_PLATFORM_EMERY) || defined(PBL_ROUND)
   graphics_context_set_stroke_width(ctx,3);
+#else
+  graphics_context_set_stroke_width(ctx,2);
+#endif
   graphics_draw_line(ctx,GPoint(0,size.h),GPoint(bounds.size.w,size.h-20));
 }
 
@@ -236,7 +246,7 @@ static void window_load(Window *window) {
   layer_set_update_proc(background_layer, background_update_proc);
   layer_add_child(window_layer, background_layer);
 
-  outlined_font = ffont_create_from_resource(RESOURCE_ID_PEACE_OUTLINE_FFONT);
+  outlined_font = ffont_create_from_resource(OUTLINE_FONT);
   filled_font = ffont_create_from_resource(RESOURCE_ID_PEACE_FFONT);
 
   time_t now = time(NULL);
