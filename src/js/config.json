@@ -108,7 +108,7 @@
               "messageKey": "cutAmount",
               "defaultValue": 0,
               "label": "Readability",
-              "description": "0: very readable, 5:what am I looking at?",
+              "description": "0: very readable, 5: what am I looking at?",
               "min": 0,
               "max": 5,
               "step": 1
