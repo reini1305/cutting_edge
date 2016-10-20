@@ -21,11 +21,7 @@ static bool bt_disconnect;
 #else
   #define FONT_SIZE 100
   #define CUT_STEP 3
-  #ifdef PBL_ROUND
-    #define OUTLINE_FONT RESOURCE_ID_PEACE_THICK_OUTLINE_FFONT
-  #else
-    #define OUTLINE_FONT RESOURCE_ID_PEACE_OUTLINE_FFONT
-  #endif
+  #define OUTLINE_FONT RESOURCE_ID_PEACE_OUTLINE_FFONT
 #endif
 
 // used to pass bimap info to get/set pixel accurately
@@ -219,7 +215,7 @@ static void background_update_proc(Layer *layer, GContext *ctx) {
 
   // draw line
   graphics_context_set_stroke_color(ctx,bt_disconnect?GColorWhite:enamel_get_line());
-#if defined(PBL_PLATFORM_EMERY) || defined(PBL_ROUND)
+#if defined(PBL_PLATFORM_EMERY)
   graphics_context_set_stroke_width(ctx,3);
 #else
   graphics_context_set_stroke_width(ctx,2);
@@ -234,8 +230,10 @@ static void handle_tick(struct tm *tick_time, TimeUnits units_changed) {
 }
 
 static void handle_bluetooth(bool connected){
-  if(enamel_get_bluetooth() && !connected) {
+  if(enamel_get_bluetooth() && !connected)
     vibes_long_pulse();
+
+  if(enamel_get_bluetoothVisual() && !connected){
     bt_disconnect = true;
   } else
     bt_disconnect = false;

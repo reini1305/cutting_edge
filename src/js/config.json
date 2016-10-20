@@ -106,7 +106,7 @@
             {
               "type": "slider",
               "messageKey": "cutAmount",
-              "defaultValue": 4,
+              "defaultValue": 0,
               "label": "Readability",
               "description": "0: very readable, 5:what am I looking at?",
               "min": 0,
@@ -124,7 +124,13 @@
             "messageKey": "bluetooth",
             "label": "Vibration on Bluetooth Disconnect?",
             "defaultValue": true
-            }
+          },
+          {
+            "type": "toggle",
+            "messageKey": "bluetoothVisual",
+            "label": "Visual Feedback on Bluetooth Disconnect?",
+            "defaultValue": true
+          }
           ]
 },
 {
